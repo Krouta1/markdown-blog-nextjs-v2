@@ -2,6 +2,13 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
+type MDXMetadata = {
+  title: string;
+  publishedAt: string;
+  summary: string;
+  category: string;
+};
+
 // function to get the MD and MDX files from the blog folder
 function getMDXFiles(dir: string) {
   const files = fs.readdirSync(dir);
@@ -25,7 +32,7 @@ function getMDXdata(dir: string) {
     const { data: metadata, content } = readMDXFile(filePath);
     const slug = path.basename(file, path.extname(file));
     return {
-      metadata,
+      metadata: metadata as MDXMetadata,
       slug,
       content,
     };
@@ -33,7 +40,7 @@ function getMDXdata(dir: string) {
   return allPosts;
 }
 
-export function getAllPosts() {
+export function getBlogPosts() {
   return getMDXdata(path.join(process.cwd(), "app", "blog", "contents"));
 }
 
@@ -41,10 +48,11 @@ export function getAllPosts() {
 export function formatDate(date: string, includeRelative = false) {
   const currentDate = new Date();
   if (!date.includes("T")) {
-    return `${date}T00:00:00`;
+    date = `${date}T00:00:00`;
   }
 
   const targetDate = new Date(date);
+
   const yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
   const monthsAgo = currentDate.getMonth() - targetDate.getMonth();
   const daysAgo = currentDate.getDate() - targetDate.getDate();
@@ -52,22 +60,24 @@ export function formatDate(date: string, includeRelative = false) {
   let formattedDate = "";
 
   if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo} year${yearsAgo > 1 ? "s" : ""} ago`;
+    formattedDate = `${yearsAgo}y ago`;
   } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo} month${monthsAgo > 1 ? "s" : ""} ago`;
+    formattedDate = `${monthsAgo}mo ago`;
   } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`;
+    formattedDate = `${daysAgo}d ago`;
+  } else {
+    formattedDate = "Today";
   }
 
-  const fullDate = targetDate.toLocaleDateString("en-US", {
-    year: "numeric",
+  const fullDate = targetDate.toLocaleString("en-us", {
     month: "long",
     day: "numeric",
+    year: "numeric",
   });
 
   if (!includeRelative) {
     return fullDate;
-  } else {
-    return `${fullDate} (${formattedDate})`;
   }
+
+  return `${fullDate} (${formattedDate})`;
 }
