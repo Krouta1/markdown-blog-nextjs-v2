@@ -3,6 +3,8 @@
 import { POSTS } from '@/lib/constants';
 import { Icons } from './icons';
 import Link from 'next/link';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
 
 export default function Footer() {
   return (
@@ -94,6 +96,30 @@ export default function Footer() {
               Subscribe to our newsletter to stay up-to-date with the latest
               news and updates.
             </p>
+            <form>
+              <div className='flex space-x-2'>
+                <Input
+                  type='email'
+                  name='email'
+                  id='email'
+                  placeholder='Enter your email'
+                  className='flex-1'
+                  defaultValue=''
+                  aria-describedby='email-error'
+                />
+                <Button>Subscribe</Button>
+              </div>
+              <div
+                id='email-error'
+                aria-label='polite'
+                aria-atomic='true'
+                className='px-1'
+              >
+                <p className='text-xs text-red-500'>error</p>
+
+                <p className='text-xs text-green-500'>state</p>
+              </div>
+            </form>
           </div>
         </div>
         <div className='mt-8 border-t border-gray-200 pt-4 text-center text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400'>
