@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Container from '@/components/container';
 import Link from 'next/link';
 import CardCategory from '@/components/card-category';
+import Header from '@/components/header';
 
 const BlogCategoryPage = ({ params }: { params: { category: string } }) => {
   //filter posts properly
@@ -24,8 +25,15 @@ const BlogCategoryPage = ({ params }: { params: { category: string } }) => {
 
   return (
     <>
+      <Header>
+        <Container>
+          <h1 className='title font-semibold text-2xl tracking-wider mt-4 uppercase'>
+            {posts[0]?.metadata.category}
+          </h1>
+        </Container>
+      </Header>
       <Container>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>
+        <div className='flex flex-wrap items-center gap-4 mt-10'>
           {sortedPosts.map((post) => (
             <Link
               href={`/blog/${post.metadata.category}/${post.slug}`}
