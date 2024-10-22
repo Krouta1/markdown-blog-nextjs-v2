@@ -6,6 +6,13 @@ import Link from 'next/link';
 import CardCategory from '@/components/card-category';
 import Header from '@/components/header';
 
+export async function generateStaticParams() {
+  const posts = getBlogPosts();
+  const categories = new Set(posts.map((post) => post.metadata.category));
+  return Array.from(categories).map((category) => ({
+    params: { category },
+  }));
+}
 const BlogCategoryPage = ({ params }: { params: { category: string } }) => {
   //filter posts properly
   const posts = getBlogPosts().filter(
