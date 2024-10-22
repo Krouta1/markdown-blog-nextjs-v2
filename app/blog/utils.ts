@@ -81,3 +81,10 @@ export function formatDate(date: string, includeRelative = false) {
 
   return `${fullDate} (${formattedDate})`;
 }
+
+export function getTermsOfServices() {
+  return getMDXdata(path.join(process.cwd(), "app", "terms-of-services"));
+}
+export function getPrivacyPolicy() {
+  return getMDXdata(path.join(process.cwd(), "app", "privacy-policy"));
+}

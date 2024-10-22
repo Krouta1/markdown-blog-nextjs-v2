@@ -84,9 +84,9 @@ export function MainNav({ className }: { className?: string }) {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href='/docs' legacyBehavior passHref>
+            <Link href='/about' legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Documentation
+                About
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
