@@ -13,6 +13,16 @@ export async function generateStaticParams() {
     params: { category },
   }));
 }
+
+export function generateMetadata({ params }: { params: { category: string } }) {
+  const { category } = params;
+
+  return {
+    title: category.toLocaleUpperCase(),
+    description: `All articles reagarding ${category}`,
+  };
+}
+
 const BlogCategoryPage = ({ params }: { params: { category: string } }) => {
   //filter posts properly
   const posts = getBlogPosts().filter(

@@ -7,6 +7,7 @@ type MDXMetadata = {
   publishedAt: string;
   summary: string;
   category: string;
+  image: string;
 };
 
 // function to get the MD and MDX files from the blog folder
